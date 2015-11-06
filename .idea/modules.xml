@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CodeViewer.iml" filepath="$PROJECT_DIR$/CodeViewer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lexer/Lexer.iml" filepath="$PROJECT_DIR$/Lexer/Lexer.iml" />
     </modules>
   </component>
 </project>
