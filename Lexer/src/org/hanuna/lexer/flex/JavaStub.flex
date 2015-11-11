@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
   @NotNull
   @Override
-  protected Token nextToken() throws java.io.IOException {
+  public Token nextToken() throws java.io.IOException {
     return next_token();
   }
 
