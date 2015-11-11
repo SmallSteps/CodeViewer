@@ -5,6 +5,8 @@ import org.hanuna.lexer.Token;
 import org.hanuna.lexer.TokenType;
 import org.hanuna.lexer.flex.support.*;
 import static org.hanuna.lexer.flex.JavaStubTokenTypes.*;
+import org.jetbrains.annotations.NotNull;
+
 %%
 
 %public
@@ -19,6 +21,8 @@ import static org.hanuna.lexer.flex.JavaStubTokenTypes.*;
 %function next_token
 %type Token
 
+%apiprivate
+
 %{
   StringBuilder string = new StringBuilder();
 
@@ -28,6 +32,12 @@ import static org.hanuna.lexer.flex.JavaStubTokenTypes.*;
 
   private Token token(TokenType type, Object value) {
     return createToken(type, yyline+1, yycolumn+1, yytext(), value);
+  }
+
+  @NotNull
+  @Override
+  protected Token nextToken() throws java.io.IOException {
+    return next_token();
   }
 
   /**
@@ -224,20 +234,20 @@ SingleCharacter = [^\r\n\'\\]
 
   /* This is matched together with the minus, because the number is too big to
      be represented by a positive integer. */
-  "-2147483648"                  { return token(INTEGER_LITERAL, new Integer(Integer.MIN_VALUE)); }
+  "-2147483648"                  { return token(NUMBER, new Integer(Integer.MIN_VALUE)); }
 
-  {DecIntegerLiteral}            { return token(INTEGER_LITERAL, new Integer(yytext())); }
-  {DecLongLiteral}               { return token(INTEGER_LITERAL, new Long(yytext().substring(0,yylength()-1))); }
+  {DecIntegerLiteral}            { return token(NUMBER, new Integer(yytext())); }
+  {DecLongLiteral}               { return token(NUMBER, new Long(yytext().substring(0,yylength()-1))); }
 
-  {HexIntegerLiteral}            { return token(INTEGER_LITERAL, new Integer((int) parseLong(2, yylength(), 16))); }
-  {HexLongLiteral}               { return token(INTEGER_LITERAL, new Long(parseLong(2, yylength()-1, 16))); }
+  {HexIntegerLiteral}            { return token(NUMBER, new Integer((int) parseLong(2, yylength(), 16))); }
+  {HexLongLiteral}               { return token(NUMBER, new Long(parseLong(2, yylength()-1, 16))); }
 
-  {OctIntegerLiteral}            { return token(INTEGER_LITERAL, new Integer((int) parseLong(0, yylength(), 8))); }
-  {OctLongLiteral}               { return token(INTEGER_LITERAL, new Long(parseLong(0, yylength()-1, 8))); }
+  {OctIntegerLiteral}            { return token(NUMBER, new Integer((int) parseLong(0, yylength(), 8))); }
+  {OctLongLiteral}               { return token(NUMBER, new Long(parseLong(0, yylength()-1, 8))); }
 
-  {FloatLiteral}                 { return token(FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
-  {DoubleLiteral}                { return token(FLOATING_POINT_LITERAL, new Double(yytext())); }
-  {DoubleLiteral}[dD]            { return token(FLOATING_POINT_LITERAL, new Double(yytext().substring(0,yylength()-1))); }
+  {FloatLiteral}                 { return token(NUMBER, new Float(yytext().substring(0,yylength()-1))); }
+  {DoubleLiteral}                { return token(NUMBER, new Double(yytext())); }
+  {DoubleLiteral}[dD]            { return token(NUMBER, new Double(yytext().substring(0,yylength()-1))); }
 
   /* comments */
   {Comment}                      { /* ignore */ } // todo
