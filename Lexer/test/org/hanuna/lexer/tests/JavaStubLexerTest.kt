@@ -12,5 +12,5 @@ class JavaStubLexerTest : AbstractLexerTest() {
 }
 
 fun main(args: Array<String>) {
-    JavaStubLexerTest().doTest("Lexer/src/org/hanuna/lexer/generated/JavaStubLexer.java")
+    JavaStubLexerTest().doTest("AndroidViewer/app/src/main/java/com/example/ozzzzz/androidviewer/MainWindow.java")
 }
