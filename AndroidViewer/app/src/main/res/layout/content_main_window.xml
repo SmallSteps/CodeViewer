@@ -17,10 +17,12 @@
             android:id="@+id/scroll_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/lyrics"
+            <com.example.ozzzzz.androidviewer.TouchableTextView
+                android:id="@+id/touchableText"
+                android:textIsSelectable="true"
                 android:text="@string/long_text" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:longClickable="true" />
         </ScrollView>
     </HorizontalScrollView>
 
