@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.ozzzzz.androidviewer.filemanager.OpenFileDialog;
+
+import java.io.File;
+
 public class MainWindow extends AppCompatActivity {
     TouchableTextView textView;
 
@@ -29,6 +33,8 @@ public class MainWindow extends AppCompatActivity {
         });
 
         textView = (TouchableTextView)findViewById(R.id.touchableText);
+
+        File filesDir = getFilesDir();
 
     }
 
@@ -52,5 +58,10 @@ public class MainWindow extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onOpenFileClick(View view) {
+        OpenFileDialog fileDialog = new OpenFileDialog(this);
+        fileDialog.show();
     }
 }
