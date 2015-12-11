@@ -1,4 +1,4 @@
-package com.example.ozzzzz.androidviewer;
+package com.ozzzzz.bogdan.androidviewer;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package com.example.ozzzzz.androidviewer;
+package com.ozzzzz.bogdan.androidviewer.utils.textselection;
 
 import android.util.Log;
 import android.view.ActionMode;
@@ -6,9 +6,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
- * Created by bogdan on 26.11.15.
+ * Created by bogdan on 01.12.15.
  */
 public class MarkTextSelectionActionModeCallback implements ActionMode.Callback {
+
     private TouchableTextView parent;
 
     public MarkTextSelectionActionModeCallback(TouchableTextView parent_) {
@@ -16,10 +17,11 @@ public class MarkTextSelectionActionModeCallback implements ActionMode.Callback 
     }
 
     final private int DEFINITION = 1;
+
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         menu.add(0, DEFINITION, 0, "GETTEXT");
-        return true;
+        return false;
     }
 
     @Override

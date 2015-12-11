@@ -1,4 +1,4 @@
-package edu.android.openfiledialog;
+package com.ozzzzz.bogdan.androidviewer.utils.filemanager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,12 +10,25 @@ import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.*;
-import android.widget.*;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

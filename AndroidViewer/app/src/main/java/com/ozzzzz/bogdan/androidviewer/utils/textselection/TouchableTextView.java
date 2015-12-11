@@ -1,4 +1,4 @@
-package com.example.ozzzzz.androidviewer;
+package com.ozzzzz.bogdan.androidviewer.utils.textselection;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,9 +6,10 @@ import android.view.ContextMenu;
 import android.widget.TextView;
 
 /**
- * Created by bogdan on 26.11.15.
+ * Created by bogdan on 01.12.15.
  */
 public class TouchableTextView extends TextView {
+
     @Override
     protected void onCreateContextMenu(ContextMenu menu) {
         super.onCreateContextMenu(menu);
@@ -27,4 +28,5 @@ public class TouchableTextView extends TextView {
     public TouchableTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
 }
