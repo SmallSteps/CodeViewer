@@ -10,23 +10,30 @@
     tools:showIn="@layout/activity_top_level"
     tools:context=".TopLevelActivity">
 
-    <HorizontalScrollView
-        android:id="@+id/horizontal_scroll_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ScrollView
-            android:id="@+id/scroll_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+    <fragment
+        class="com.ozzzzz.bogdan.androidviewer.LastProjectsFragment"
+        android:id="@+id/last_projects_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    
+    
+    <!--<HorizontalScrollView-->
+        <!--android:id="@+id/horizontal_scroll_text"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ScrollView-->
+            <!--android:id="@+id/scroll_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
 
-            <com.ozzzzz.bogdan.androidviewer.utils.textselection.TouchableTextView
-                android:id="@+id/touchableText"
-                android:textIsSelectable="true"
-                android:text="@string/long_text" android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:longClickable="true"
-                android:onClick="onOpenFileClick"/>
-        </ScrollView>
-    </HorizontalScrollView>
+            <!--<com.ozzzzz.bogdan.androidviewer.utils.textselection.TouchableTextView-->
+                <!--android:id="@+id/touchableText"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:text="@string/long_text" android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:longClickable="true"-->
+                <!--android:onClick="onOpenFileClick"/>-->
+        <!--</ScrollView>-->
+    <!--</HorizontalScrollView>-->
 
 </RelativeLayout>

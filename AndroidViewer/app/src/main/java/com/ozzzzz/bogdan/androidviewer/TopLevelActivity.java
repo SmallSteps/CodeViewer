@@ -1,43 +1,59 @@
 package com.ozzzzz.bogdan.androidviewer;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ozzzzz.bogdan.androidviewer.utils.filemanager.OpenFileDialog;
 import com.ozzzzz.bogdan.androidviewer.utils.textselection.TouchableTextView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class TopLevelActivity extends AppCompatActivity {
+public class TopLevelActivity extends AppCompatActivity implements LastProjectsFragment.ProjectListListener {
 
     TouchableTextView textView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Project.projects = new ArrayList<Project>();
+
+        testAddProjects();
+
         setContentView(R.layout.activity_top_level);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                onOpenFileClick(v);
             }
         });
 
-        textView = (TouchableTextView)findViewById(R.id.touchableText);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+//        textView = (TouchableTextView)findViewById(R.id.touchableText);
     }
 
     @Override
@@ -78,5 +94,40 @@ public class TopLevelActivity extends AppCompatActivity {
     private void onOpenFile(File file) {
 
         Log.d("Filesize", file.getName());
+    }
+
+    public void testAddProjects() {
+        new Project("Project1", "/folder/Project1");
+        new Project("Project2", "/folder/Project2");
+        new Project("Project3", "/folder/Project3");
+    }
+
+    @Override
+    public void itemClicked(long id) {
+        Toast.makeText(getApplicationContext(),  "id:"+ id, Toast.LENGTH_LONG).show();
+    }
+
+    public void saveProjectsFile() throws IOException {
+
+        FileOutputStream fos = openFileOutput(AndroidViewer.PROJECTSFILE, Context.MODE_PRIVATE);
+        String outputString = "";
+        for (Project project : Project.projects) {
+            outputString.concat(project.getName() + ":" + project.getLocation());
+        }
+        fos.write(outputString.getBytes());
+        fos.close();
+    }
+
+    public void loadProjectsFile() throws IOException {
+
+        FileInputStream fis = openFileInput(AndroidViewer.PROJECTSFILE);
+        String inputString = "";
+        int c;
+        while( (c = fis.read()) != -1){
+            inputString += Character.toString((char)c);
+        }
+
+        Toast.makeText(getBaseContext(),"file read: " + inputString, Toast.LENGTH_SHORT).show();
+        fis.close();
     }
 }
