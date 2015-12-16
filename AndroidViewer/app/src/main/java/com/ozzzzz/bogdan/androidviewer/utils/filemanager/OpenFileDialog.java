@@ -35,6 +35,7 @@ import java.util.List;
  * User: Scogun
  * Date: 27.11.13
  * Time: 10:47
+ * Added long click listener on files and folders by Bogdan Neterebskii
  */
 public class OpenFileDialog extends AlertDialog.Builder {
 
@@ -69,11 +70,12 @@ public class OpenFileDialog extends AlertDialog.Builder {
                     setDrawable(view, folderIcon);
                 } else {
                     setDrawable(view, fileIcon);
-                    if (selectedIndex == position)
-                        view.setBackgroundColor(getContext().getResources().getColor(android.R.color.holo_blue_dark));
-                    else
-                        view.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
                 }
+
+                if (selectedIndex == position)
+                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.holo_blue_dark));
+                else
+                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
             }
             return view;
         }
@@ -295,6 +297,23 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 }
             }
         });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final ArrayAdapter<File> adapter = (FileAdapter) parent.getAdapter();
+                File file = adapter.getItem(position);
+                if (position != selectedIndex)
+                    selectedIndex = position;
+                else
+                    selectedIndex = -1;
+                adapter.notifyDataSetChanged();
+
+                return true;
+            }
+        });
+
         return listView;
     }
 }
