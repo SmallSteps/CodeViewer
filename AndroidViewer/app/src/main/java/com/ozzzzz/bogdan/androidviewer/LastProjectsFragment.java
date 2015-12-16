@@ -32,6 +32,7 @@ public class LastProjectsFragment extends ListFragment {
                              Bundle savedInstanceState) {
 
         if (Project.projects.size() != 0) {
+
             String[] projectNames = new String[Project.projects.size()];
 
             for (int i = 0; i < projectNames.length; i++) {

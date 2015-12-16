@@ -103,6 +103,9 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
                     @Override
                     public void OnSelectedFile(String fileName) {
                         Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
+                        String[] files = fileName.split("/");
+                        String name = files[files.length - 1];
+                        new Project(name, fileName);
                         onOpenFile(new File(fileName));
                     }
                 });
