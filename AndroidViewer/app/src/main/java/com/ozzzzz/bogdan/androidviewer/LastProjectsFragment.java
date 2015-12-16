@@ -30,19 +30,21 @@ public class LastProjectsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String[] projectNames = new String[Project.projects.size()];
 
-        for (int i = 0; i < projectNames.length; i++) {
-            projectNames[i] = Project.projects.get(i).getName();
+        if (Project.projects.size() != 0) {
+            String[] projectNames = new String[Project.projects.size()];
+
+            for (int i = 0; i < projectNames.length; i++) {
+                projectNames[i] = Project.projects.get(i).getName();
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    inflater.getContext(),
+                    android.R.layout.simple_list_item_1,
+                    projectNames);
+
+            setListAdapter(adapter);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                inflater.getContext(),
-                android.R.layout.simple_list_item_1,
-                projectNames);
-
-        setListAdapter(adapter);
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

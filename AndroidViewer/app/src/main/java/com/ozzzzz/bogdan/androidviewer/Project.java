@@ -20,7 +20,8 @@ public class Project {
     public Project(String name, String location) {
         this.name = name;
         this.location = location;
-        projects.add(this);
+        if (!projects.contains(this))
+            projects.add(this);
     }
 
     public String getName() {
@@ -31,5 +32,13 @@ public class Project {
         return location;
     }
 
-
+    @Override
+    public boolean equals(Object ob) {
+        if (ob == null) return false;
+        if (ob.getClass() != getClass()) return false;
+        Project other = (Project) ob;
+        if (!location.equals(other.location)) return false;
+        if (!name.equals(other.name)) return false;
+        return true;
+    }
 }

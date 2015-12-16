@@ -30,13 +30,19 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         super.onCreate(savedInstanceState);
         Project.projects = new ArrayList<Project>();
 
-        testAddProjects();
+//        testAddProjects();
 
         setContentView(R.layout.activity_top_level);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        try {
+            loadProjectsFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +84,18 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            saveProjectsFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void onOpenFileClick(View view) {
         OpenFileDialog fileDialog = new OpenFileDialog(this)
                 // .setFilter(".*\\.csv")
@@ -104,7 +122,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
     @Override
     public void itemClicked(long id) {
-        Toast.makeText(getApplicationContext(),  "id:"+ id, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
     }
 
     public void saveProjectsFile() throws IOException {
@@ -112,7 +130,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         FileOutputStream fos = openFileOutput(AndroidViewer.PROJECTSFILE, Context.MODE_PRIVATE);
         String outputString = "";
         for (Project project : Project.projects) {
-            outputString.concat(project.getName() + ":" + project.getLocation());
+            outputString += project.getName() + ":" + project.getLocation() + "\n";
         }
         fos.write(outputString.getBytes());
         fos.close();
@@ -126,8 +144,16 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         while( (c = fis.read()) != -1){
             inputString += Character.toString((char)c);
         }
-
         Toast.makeText(getBaseContext(),"file read: " + inputString, Toast.LENGTH_SHORT).show();
         fis.close();
+        parseProjectsFile(inputString);
+    }
+
+    public void parseProjectsFile(String inputString) {
+        String[] projects = inputString.split("\n");
+        for (String project : projects) {
+            String[] oneProject = project.split(":");
+            new Project(oneProject[0], oneProject[1]);
+        }
     }
 }
