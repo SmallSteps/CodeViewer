@@ -32,7 +32,8 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Project.projects = new ArrayList<Project>();
+
+//        Project.projects = new ArrayList<Project>();
 
         setContentView(R.layout.activity_top_level);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -122,10 +123,10 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
     }
 
     private void onOpenFile(String fileName) {
+        //todo you know what to do (2 things: LAST AND "/")
         String[] files = fileName.split("/");
         String name = files[files.length - 1];
-        new Project(name, fileName);
-
+        AndroidViewer.projectManager.addProject(new Project(name, fileName));
         lastProjectsFragment.updateList();
     }
 
@@ -143,7 +144,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
         FileOutputStream fos = openFileOutput(AndroidViewer.PROJECTSFILE, Context.MODE_PRIVATE);
         String outputString = "";
-        for (Project project : Project.projects) {
+        for (Project project : AndroidViewer.projectManager.getProjects()) {
             outputString += project.getName() + ":" + project.getLocation() + "\n";
         }
         fos.write(outputString.getBytes());

@@ -1,29 +1,18 @@
 package com.ozzzzz.bogdan.androidviewer;
 
-import android.content.Context;
-
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.Serializable;
 
 /**
  * Created by neterebsky on 15.12.15.
  */
-public class Project {
-    public static List<Project> projects;
+public final class Project implements Serializable {
 
-    private String name;
-    private String location;
-    private long projectId;
+    private final String name;
+    private final String location;
 
     public Project(String name, String location) {
         this.name = name;
         this.location = location;
-        if (!projects.contains(this)) {
-            projects.add(0, this);
-        }
     }
 
     public String getName() {
@@ -37,11 +26,16 @@ public class Project {
     @Override
     public boolean equals(Object ob) {
         if (ob == null) return false;
-        if (ob.getClass() != getClass()) return false;
+        if (!(ob instanceof Project)) return false;
         Project other = (Project) ob;
         if (!location.equals(other.location)) return false;
         if (!name.equals(other.name)) return false;
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + 31 * location.hashCode();
     }
 
     @Override

@@ -43,7 +43,7 @@ public class LastProjectsFragment extends ListFragment
         adapter = new ArrayAdapter<Project>(
                 inflater.getContext(),
                 android.R.layout.simple_list_item_1,
-                Project.projects);
+                AndroidViewer.projectManager.getProjects());
 
         setListAdapter(adapter);
 
