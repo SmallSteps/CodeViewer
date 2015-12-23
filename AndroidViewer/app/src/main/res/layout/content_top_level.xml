@@ -14,9 +14,9 @@
         class="com.ozzzzz.bogdan.androidviewer.LastProjectsFragment"
         android:id="@+id/last_projects_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    
-    
+        android:layout_height="match_parent"
+         />
+
     <!--<HorizontalScrollView-->
         <!--android:id="@+id/horizontal_scroll_text"-->
         <!--android:layout_width="wrap_content"-->

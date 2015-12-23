@@ -3,6 +3,7 @@ package com.ozzzzz.bogdan.androidviewer;
 import android.content.Context;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,8 +21,9 @@ public class Project {
     public Project(String name, String location) {
         this.name = name;
         this.location = location;
-        if (!projects.contains(this))
-            projects.add(this);
+        if (!projects.contains(this)) {
+            projects.add(0, this);
+        }
     }
 
     public String getName() {
@@ -40,5 +42,10 @@ public class Project {
         if (!location.equals(other.location)) return false;
         if (!name.equals(other.name)) return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

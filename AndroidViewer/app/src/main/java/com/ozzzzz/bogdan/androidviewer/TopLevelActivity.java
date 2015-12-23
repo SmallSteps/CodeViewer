@@ -1,5 +1,6 @@
 package com.ozzzzz.bogdan.androidviewer;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,12 +26,13 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
     TouchableTextView textView;
 
+    private LastProjectsFragment lastProjectsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Project.projects = new ArrayList<Project>();
 
-//        testAddProjects();
+        Project.projects = new ArrayList<Project>();
 
         setContentView(R.layout.activity_top_level);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -38,11 +40,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        try {
-            loadProjectsFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +48,12 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
                 onOpenFileClick(v);
             }
         });
+
+        lastProjectsFragment = (LastProjectsFragment)getFragmentManager().
+                findFragmentById(R.id.last_projects_container);
+
+
+//        Fragment fragment = (Fragment)findViewById(R.id.last_projects_container);
 
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -60,6 +64,26 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 //        });
 
 //        textView = (TouchableTextView)findViewById(R.id.touchableText);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            loadProjectsFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            saveProjectsFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,18 +108,6 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        try {
-            saveProjectsFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void onOpenFileClick(View view) {
         OpenFileDialog fileDialog = new OpenFileDialog(this)
                 // .setFilter(".*\\.csv")
@@ -103,30 +115,29 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
                     @Override
                     public void OnSelectedFile(String fileName) {
                         Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
-                        String[] files = fileName.split("/");
-                        String name = files[files.length - 1];
-                        new Project(name, fileName);
-                        onOpenFile(new File(fileName));
+                        onOpenFile(fileName);
                     }
                 });
         fileDialog.show();
     }
 
-    private void onOpenFile(File file) {
+    private void onOpenFile(String fileName) {
+        String[] files = fileName.split("/");
+        String name = files[files.length - 1];
+        new Project(name, fileName);
 
-        Log.d("Filesize", file.getName());
-    }
-
-    public void testAddProjects() {
-        new Project("Project1", "/folder/Project1");
-        new Project("Project2", "/folder/Project2");
-        new Project("Project3", "/folder/Project3");
+        lastProjectsFragment.updateList();
     }
 
     @Override
     public void itemClicked(long id) {
         Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
     }
+
+    /*@Override
+    public void itemLongClicked(long id) {
+        Toast.makeText(getApplicationContext(), "Long clicked:" + id, Toast.LENGTH_SHORT).show();
+    }*/
 
     public void saveProjectsFile() throws IOException {
 
@@ -149,7 +160,8 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         }
         Toast.makeText(getBaseContext(),"file read: " + inputString, Toast.LENGTH_SHORT).show();
         fis.close();
-        parseProjectsFile(inputString);
+        if (!inputString.equals(""))
+            parseProjectsFile(inputString);
     }
 
     public void parseProjectsFile(String inputString) {
