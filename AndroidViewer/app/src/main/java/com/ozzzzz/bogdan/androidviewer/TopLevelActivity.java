@@ -123,9 +123,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
     }
 
     private void onOpenFile(String fileName) {
-        //todo you know what to do (2 things: LAST AND "/")
-        String[] files = fileName.split("/");
-        String name = files[files.length - 1];
+        String name = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
         AndroidViewer.projectManager.addProject(new Project(name, fileName));
         lastProjectsFragment.updateList();
     }

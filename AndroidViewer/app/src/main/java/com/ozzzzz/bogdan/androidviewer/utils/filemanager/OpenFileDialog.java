@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ozzzzz.bogdan.androidviewer.R;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ import java.util.List;
 public class OpenFileDialog extends AlertDialog.Builder {
 
     private String currentPath = Environment.getExternalStorageDirectory().getPath();
+    private String currentTitle = currentPath;
     private List<File> files = new ArrayList<File>();
     private TextView title;
     private ListView listView;
@@ -73,7 +76,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 }
 
                 if (selectedIndex == position)
-                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.holo_blue_dark));
+                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.darker_gray/*holo_blue_dark*/));
                 else
                     view.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
             }
@@ -227,18 +230,19 @@ public class OpenFileDialog extends AlertDialog.Builder {
     }
 
     private void changeTitle() {
-        String titleText = currentPath;
+//        String openText = getContext().getResources().getString(R.string.open_dialog);
+        String titleText = /*openText +*/ currentTitle;
         int screenWidth = getScreenSize(getContext()).x;
         int maxWidth = (int) (screenWidth * 0.99);
         if (getTextWidth(titleText, title.getPaint()) > maxWidth) {
-            while (getTextWidth("..." + titleText, title.getPaint()) > maxWidth) {
+            while (getTextWidth(/*openText + */"..." + titleText, title.getPaint()) > maxWidth) {
                 int start = titleText.indexOf("/", 2);
                 if (start > 0)
                     titleText = titleText.substring(start);
                 else
                     titleText = titleText.substring(2);
             }
-            title.setText("..." + titleText);
+            title.setText(/*openText + */"..." + titleText);
         } else {
             title.setText(titleText);
         }
@@ -289,30 +293,34 @@ public class OpenFileDialog extends AlertDialog.Builder {
                     currentPath = file.getPath();
                     RebuildFiles(adapter);
                 } else {
-                    if (index != selectedIndex)
+                    if (index != selectedIndex){
                         selectedIndex = index;
-                    else
+                        currentTitle += File.separator + file.getName();
+                    } else {
                         selectedIndex = -1;
-                    adapter.notifyDataSetChanged();
+                        currentTitle = currentPath;
+                    }
+                    changeTitle();
                 }
-            }
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final ArrayAdapter<File> adapter = (FileAdapter) parent.getAdapter();
-                File file = adapter.getItem(position);
-                if (position != selectedIndex)
-                    selectedIndex = position;
-                else
-                    selectedIndex = -1;
                 adapter.notifyDataSetChanged();
-
-                return true;
             }
         });
+
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                final ArrayAdapter<File> adapter = (FileAdapter) parent.getAdapter();
+//                File file = adapter.getItem(position);
+//                if (position != selectedIndex)
+//                    selectedIndex = position;
+//                else
+//                    selectedIndex = -1;
+//                adapter.notifyDataSetChanged();
+//
+//                return true;
+//            }
+//        });
 
         return listView;
     }
