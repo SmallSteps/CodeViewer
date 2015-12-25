@@ -18,6 +18,11 @@ public class ProjectManager {
     }
 
     public void moveProjectUp(Project project) {
+        int index = projects.indexOf(project);
+        if (index > -1) {
+            projects.remove(project);
+            projects.add(0, project);
+        }
         //todo
     }
 

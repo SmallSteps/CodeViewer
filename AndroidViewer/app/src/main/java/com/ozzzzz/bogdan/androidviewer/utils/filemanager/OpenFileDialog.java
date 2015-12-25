@@ -76,7 +76,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 }
 
                 if (selectedIndex == position)
-                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.darker_gray/*holo_blue_dark*/));
+                    view.setBackgroundColor(getContext().getResources().getColor(android.R.color.darker_gray));
                 else
                     view.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
             }
@@ -108,8 +108,12 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (selectedIndex > -1 && listener != null) {
-                            listener.OnSelectedFile(listView.getItemAtPosition(selectedIndex).toString());
+                        if (listener != null) {
+                            if (selectedIndex > -1) {
+                                listener.OnSelectedFile(listView.getItemAtPosition(selectedIndex).toString());
+                            } else {
+                                listener.OnSelectedFile(currentPath);
+                            }
                         }
                     }
                 })
@@ -216,6 +220,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 File parentDirectory = file.getParentFile();
                 if (parentDirectory != null) {
                     currentPath = parentDirectory.getPath();
+                    currentTitle = currentPath;
                     RebuildFiles(((FileAdapter) listView.getAdapter()));
                 }
             }
@@ -230,19 +235,18 @@ public class OpenFileDialog extends AlertDialog.Builder {
     }
 
     private void changeTitle() {
-//        String openText = getContext().getResources().getString(R.string.open_dialog);
-        String titleText = /*openText +*/ currentTitle;
+        String titleText = currentTitle;
         int screenWidth = getScreenSize(getContext()).x;
-        int maxWidth = (int) (screenWidth * 0.99);
+        int maxWidth = (int) (screenWidth * 0.9);
         if (getTextWidth(titleText, title.getPaint()) > maxWidth) {
-            while (getTextWidth(/*openText + */"..." + titleText, title.getPaint()) > maxWidth) {
-                int start = titleText.indexOf("/", 2);
+            while (getTextWidth("..." + titleText, title.getPaint()) > maxWidth) {
+                int start = titleText.indexOf(File.separator, 2);
                 if (start > 0)
                     titleText = titleText.substring(start);
                 else
                     titleText = titleText.substring(2);
             }
-            title.setText(/*openText + */"..." + titleText);
+            title.setText("..." + titleText);
         } else {
             title.setText(titleText);
         }
@@ -291,6 +295,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
                 File file = adapter.getItem(index);
                 if (file.isDirectory()) {
                     currentPath = file.getPath();
+                    currentTitle = currentPath;
                     RebuildFiles(adapter);
                 } else {
                     if (index != selectedIndex){
@@ -301,26 +306,10 @@ public class OpenFileDialog extends AlertDialog.Builder {
                         currentTitle = currentPath;
                     }
                     changeTitle();
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
             }
         });
-
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                final ArrayAdapter<File> adapter = (FileAdapter) parent.getAdapter();
-//                File file = adapter.getItem(position);
-//                if (position != selectedIndex)
-//                    selectedIndex = position;
-//                else
-//                    selectedIndex = -1;
-//                adapter.notifyDataSetChanged();
-//
-//                return true;
-//            }
-//        });
 
         return listView;
     }

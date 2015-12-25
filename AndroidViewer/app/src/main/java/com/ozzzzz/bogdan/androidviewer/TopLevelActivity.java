@@ -133,11 +133,6 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
     }
 
-    /*@Override
-    public void itemLongClicked(long id) {
-        Toast.makeText(getApplicationContext(), "Long clicked:" + id, Toast.LENGTH_SHORT).show();
-    }*/
-
     public void saveProjectsFile() throws IOException {
 
         FileOutputStream fos = openFileOutput(AndroidViewer.PROJECTSFILE, Context.MODE_PRIVATE);
