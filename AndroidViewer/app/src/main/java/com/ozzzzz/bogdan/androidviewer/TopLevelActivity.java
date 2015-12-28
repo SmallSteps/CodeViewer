@@ -1,12 +1,11 @@
 package com.ozzzzz.bogdan.androidviewer;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +16,8 @@ import com.ozzzzz.bogdan.androidviewer.utils.textselection.TouchableTextView;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class TopLevelActivity extends AppCompatActivity implements LastProjectsFragment.ProjectListListener {
 
@@ -124,13 +121,14 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
     private void onOpenFile(String fileName) {
         String name = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
-        AndroidViewer.projectManager.addProject(new Project(name, fileName));
+        AndroidViewer.projectManager.addProjectToHead(new Project(name, fileName));
         lastProjectsFragment.updateList();
     }
 
     @Override
     public void itemClicked(long id) {
         Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
+
     }
 
     public void saveProjectsFile() throws IOException {
@@ -162,7 +160,7 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         String[] projects = inputString.split("\n");
         for (String project : projects) {
             String[] oneProject = project.split(":");
-            new Project(oneProject[0], oneProject[1]);
+            AndroidViewer.projectManager.addProject(new Project(oneProject[0], oneProject[1]));
         }
     }
 }

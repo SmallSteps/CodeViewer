@@ -6,15 +6,18 @@ import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 /**
@@ -45,9 +48,6 @@ public class LastProjectsFragment extends ListFragment
                 AndroidViewer.projectManager.getProjects());
 
         setListAdapter(adapter);
-
-
-
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

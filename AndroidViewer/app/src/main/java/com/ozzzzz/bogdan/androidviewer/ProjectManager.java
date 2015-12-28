@@ -14,6 +14,10 @@ public class ProjectManager {
     }
 
     public void addProject(Project project) {
+        if (!projects.contains(project)) projects.add(project);
+    }
+
+    public void addProjectToHead(Project project) {
         if (!projects.contains(project)) projects.add(0, project);
     }
 
