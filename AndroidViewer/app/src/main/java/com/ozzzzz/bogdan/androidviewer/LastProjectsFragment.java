@@ -26,8 +26,6 @@ import android.widget.Toast;
 public class LastProjectsFragment extends ListFragment
     /*implements AdapterView.OnItemLongClickListener*/ {
 
-    private static final int DELETE_ID = Menu.FIRST + 1;
-
     static interface ProjectListListener {
 
         void itemClicked(long id);
@@ -76,19 +74,6 @@ public class LastProjectsFragment extends ListFragment
 //        return true;
 //    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-//        registerForContextMenu(getListView());
-//        getListView().setOnItemLongClickListener(this);
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.project_list_menu, menu);
-    }
 
     public void updateList() {
         adapter.notifyDataSetChanged();
@@ -103,20 +88,20 @@ public class LastProjectsFragment extends ListFragment
 //        super.onCreateContextMenu(menu, v, menuInfo);
 //    }
 
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-        switch (item.getItemId()) {
-            case DELETE_ID:
-                Log.d("ITEM:", String.valueOf(info.id));
-//                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-//                        .getMenuInfo();
-//                Uri uri = Uri.parse(DatabaseContentProvider.BOOKMARK_ID_URI + Long.toString(info.id));
-//                getActivity().getContentResolver().delete(uri, null, null);
-                return true;
-        }
-        return super.onContextItemSelected(item);
-    }
+//    @Override
+//    public boolean onContextItemSelected(android.view.MenuItem item) {
+//
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+//
+//        switch (item.getItemId()) {
+//            case DELETE_ID:
+//                Log.d("ITEM:", String.valueOf(info.id));
+////                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+////                        .getMenuInfo();
+////                Uri uri = Uri.parse(DatabaseContentProvider.BOOKMARK_ID_URI + Long.toString(info.id));
+////                getActivity().getContentResolver().delete(uri, null, null);
+//                return true;
+//        }
+//        return super.onContextItemSelected(item);
+//    }
 }

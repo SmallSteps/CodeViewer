@@ -1,5 +1,6 @@
 package com.ozzzzz.bogdan.androidviewer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.ozzzzz.bogdan.androidviewer.utils.filemanager.OpenFileDialog;
@@ -19,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class TopLevelActivity extends AppCompatActivity implements LastProjectsFragment.ProjectListListener {
+public class TopLevelActivity extends Activity implements LastProjectsFragment.ProjectListListener {
 
     TouchableTextView textView;
 
@@ -29,23 +31,22 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-//        Project.projects = new ArrayList<Project>();
-
         setContentView(R.layout.activity_top_level);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onOpenFileClick(v);
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//
+//
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onOpenFileClick(v);
+//            }
+//        });
 
         lastProjectsFragment = (LastProjectsFragment)getFragmentManager().
                 findFragmentById(R.id.last_projects_container);
@@ -86,9 +87,8 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_top_level, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -96,13 +96,11 @@ public class TopLevelActivity extends AppCompatActivity implements LastProjectsF
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_add_project:
+                onOpenFileClick(getWindow().getDecorView().getRootView());
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
