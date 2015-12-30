@@ -6,36 +6,26 @@ import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LastProjectsFragment extends ListFragment
-    /*implements AdapterView.OnItemLongClickListener*/ {
-
-
+public class LastProjectsFragment extends ListFragment {
 
     interface ProjectListListener {
-
         void itemClicked(long id);
-
     }
 
     private ProjectListListener listener;
@@ -45,10 +35,29 @@ public class LastProjectsFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        adapter = new ArrayAdapter<Project>(
+//        adapter = new ArrayAdapter<Project>(
+//                inflater.getContext(),
+//                android.R.layout.simple_list_item_1,
+//                AndroidViewer.projectManager.getProjects());
+
+        adapter = new ArrayAdapter(
                 inflater.getContext(),
-                android.R.layout.simple_list_item_1,
-                AndroidViewer.projectManager.getProjects());
+                android.R.layout.simple_list_item_2,
+                android.R.id.text1, AndroidViewer.projectManager.getProjects()) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(AndroidViewer.projectManager.getProjects().get(position).getName());
+                text2.setText("..." + File.separator +
+                        AndroidViewer.projectManager.getProjects().get(position).getParentFolder() +
+                        File.separator);
+                return view;
+            }
+        };
 
         setListAdapter(adapter);
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -83,11 +92,13 @@ public class LastProjectsFragment extends ListFragment
     }
 
     private void showPopupMenu(View view, final long id) {
-//        final PopupAdapter adapter = (PopupAdapter) getListAdapter();
-        // Retrieve the clicked item from view's tag
-        final String item = (String) view.getTag();
         // Create a PopupMenu, giving it the clicked view for an anchor
-        PopupMenu popup = new PopupMenu(getActivity(), view);
+        PopupMenu popup;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            popup = new PopupMenu(getActivity(), view, Gravity.CENTER);
+        } else {
+            popup = new PopupMenu(getActivity(), view);
+        }
         // Inflate our menu resource into the PopupMenu's Menu
         popup.getMenuInflater().inflate(R.menu.menu_project, popup.getMenu());
         // Set a listener so we are notified if a menu item is clicked
@@ -100,7 +111,7 @@ public class LastProjectsFragment extends ListFragment
                         Log.d("OPEN", "OPEEEEN!");
                         return true;
                     case R.id.action_delete_project:
-                        deleteProject(adapter.getItem((int)id));
+                        deleteProject(adapter.getItem((int) id));
                         return true;
                 }
                 return false;

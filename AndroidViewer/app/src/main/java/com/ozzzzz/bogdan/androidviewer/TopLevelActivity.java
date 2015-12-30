@@ -94,9 +94,6 @@ public class TopLevelActivity extends Activity implements LastProjectsFragment.P
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_add_project:
                 onOpenFileClick(getWindow().getDecorView().getRootView());
@@ -124,26 +121,6 @@ public class TopLevelActivity extends Activity implements LastProjectsFragment.P
         lastProjectsFragment.updateList();
     }
 
-
-
-
-
-//    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.archive:
-//                archive(item);
-//                return true;
-//            case R.id.delete:
-//                delete(item);
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
-
-
-
     @Override
     public void itemClicked(long id) {
 //        Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
@@ -169,7 +146,7 @@ public class TopLevelActivity extends Activity implements LastProjectsFragment.P
         while( (c = fis.read()) != -1){
             inputString += Character.toString((char)c);
         }
-        Toast.makeText(getBaseContext(),"file read: " + inputString, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getBaseContext(),"file read: " + inputString, Toast.LENGTH_SHORT).show();
         fis.close();
         if (!inputString.equals(""))
             parseProjectsFile(inputString);
