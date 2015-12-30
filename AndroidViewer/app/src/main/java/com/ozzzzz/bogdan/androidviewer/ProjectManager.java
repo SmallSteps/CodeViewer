@@ -30,4 +30,8 @@ public class ProjectManager {
         //todo
     }
 
+    public void removeProject(Project project) {
+        projects.remove(project);
+    }
+
 }

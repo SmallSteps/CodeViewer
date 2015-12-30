@@ -1,16 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".TopLevelActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item android:id="@+id/action_add_project"
         android:title="@string/action_add_project"
-        android:orderInCategory="1"
-        app:showAsAction="always"
+        android:orderInCategory="0"
+        android:showAsAction="always"
         android:icon="@android:drawable/ic_input_add"
-        />
+        tools:ignore="AppCompatResource" />
 
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="1"
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource" />
+
 </menu>

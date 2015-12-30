@@ -17,7 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,14 +30,15 @@ import android.widget.Toast;
 public class LastProjectsFragment extends ListFragment
     /*implements AdapterView.OnItemLongClickListener*/ {
 
-    static interface ProjectListListener {
+
+
+    interface ProjectListListener {
 
         void itemClicked(long id);
-//        void itemLongClicked(long id);
 
     }
-    private ProjectListListener listener;
 
+    private ProjectListListener listener;
     private ArrayAdapter<Project> adapter;
 
     @Override
@@ -61,47 +66,47 @@ public class LastProjectsFragment extends ListFragment
         this.setEmptyText(getResources().getString(R.string.add_projects));
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        if (listener != null)
-            listener.itemClicked(id);
-    }
-
-//    @Override
-//    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (listener != null)
-//            listener.itemLongClicked(id);
-//        return true;
-//    }
-
-
     public void updateList() {
         adapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v,
-//                                    ContextMenu.ContextMenuInfo menuInfo) {
-//
-////        menu.
-////        menu.add(0, DELETE_ID, 0, R.string.menu_delete_project);
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//    }
+    public void deleteProject(Project project) {
+        AndroidViewer.projectManager.removeProject(project);
+        adapter.notifyDataSetChanged();
+    }
 
-//    @Override
-//    public boolean onContextItemSelected(android.view.MenuItem item) {
-//
-//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//
-//        switch (item.getItemId()) {
-//            case DELETE_ID:
-//                Log.d("ITEM:", String.valueOf(info.id));
-////                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-////                        .getMenuInfo();
-////                Uri uri = Uri.parse(DatabaseContentProvider.BOOKMARK_ID_URI + Long.toString(info.id));
-////                getActivity().getContentResolver().delete(uri, null, null);
-//                return true;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        if (listener != null)
+            listener.itemClicked(id);
+        showPopupMenu(v, id);
+    }
+
+    private void showPopupMenu(View view, final long id) {
+//        final PopupAdapter adapter = (PopupAdapter) getListAdapter();
+        // Retrieve the clicked item from view's tag
+        final String item = (String) view.getTag();
+        // Create a PopupMenu, giving it the clicked view for an anchor
+        PopupMenu popup = new PopupMenu(getActivity(), view);
+        // Inflate our menu resource into the PopupMenu's Menu
+        popup.getMenuInflater().inflate(R.menu.menu_project, popup.getMenu());
+        // Set a listener so we are notified if a menu item is clicked
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_open_project:
+                        // Remove the item from the adapter
+                        Log.d("OPEN", "OPEEEEN!");
+                        return true;
+                    case R.id.action_delete_project:
+                        deleteProject(adapter.getItem((int)id));
+                        return true;
+                }
+                return false;
+            }
+        });
+        // Finally show the PopupMenu
+        popup.show();
+    }
 }

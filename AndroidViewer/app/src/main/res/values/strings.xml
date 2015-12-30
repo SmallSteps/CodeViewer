@@ -5,9 +5,13 @@
     <string name="open_dialog">Open:</string>
 
     <!-- TOP LEVEL ACTIVITY-->
-    <string name="action_add_project">New</string>
     <string name="add_projects">Add projects first</string>
+
+    <string name="action_add_project">New</string>
     <string name="action_settings">Settings</string>
+
+    <string name="action_open_project">Open</string>
+    <string name="action_delete_project">Delete</string>
 
 
     <string name="long_text">All God\'s children need travelling shoes\n

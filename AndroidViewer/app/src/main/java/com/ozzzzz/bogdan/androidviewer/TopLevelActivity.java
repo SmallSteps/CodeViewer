@@ -10,6 +10,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
@@ -123,10 +124,30 @@ public class TopLevelActivity extends Activity implements LastProjectsFragment.P
         lastProjectsFragment.updateList();
     }
 
+
+
+
+
+//    @Override
+//    public boolean onMenuItemClick(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.archive:
+//                archive(item);
+//                return true;
+//            case R.id.delete:
+//                delete(item);
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
+
+
+
     @Override
     public void itemClicked(long id) {
-        Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
-
+//        Toast.makeText(getApplicationContext(), "id:" + id + "; name + ", Toast.LENGTH_LONG).show();
+//        showMenu(this);
     }
 
     public void saveProjectsFile() throws IOException {
