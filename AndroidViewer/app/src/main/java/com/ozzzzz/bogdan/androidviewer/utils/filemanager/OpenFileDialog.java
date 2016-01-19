@@ -277,7 +277,7 @@ public class OpenFileDialog extends AlertDialog.Builder {
             files.addAll(fileList);
             adapter.notifyDataSetChanged();
             changeTitle();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) { //todo exception не нужен
             String message = getContext().getResources().getString(android.R.string.unknownName);
             if (!accessDeniedMessage.equals(""))
                 message = accessDeniedMessage;

@@ -40,10 +40,11 @@ public class LastProjectsFragment extends ListFragment {
 //                android.R.layout.simple_list_item_1,
 //                AndroidViewer.projectManager.getProjects());
 
-        adapter = new ArrayAdapter(
+        adapter = new ArrayAdapter<Project>(
                 inflater.getContext(),
                 android.R.layout.simple_list_item_2,
-                android.R.id.text1, AndroidViewer.projectManager.getProjects()) {
+                android.R.id.text1, AndroidViewer.projectManager.getProjects()
+        ) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
