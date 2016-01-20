@@ -1,5 +1,7 @@
 package com.ozzzzz.bogdan.androidviewer;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 
 /**
@@ -9,10 +11,12 @@ public final class Project implements Serializable {
 
     private final String name;
     private final String location;
+    private final String parentFolder;
 
     public Project(String name, String location) {
         this.name = name;
         this.location = location;
+        this.parentFolder = GetParentFolder(location);
     }
 
     public String getName() {
@@ -21,6 +25,10 @@ public final class Project implements Serializable {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getParentFolder() {
+        return parentFolder;
     }
 
     @Override
@@ -41,5 +49,14 @@ public final class Project implements Serializable {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    private String GetParentFolder(String location) {
+        String[] locationArray = location.split(File.separator);
+        if (locationArray.length > 2) {
+            return locationArray[locationArray.length - 2];
+        } else {
+            return File.separator;
+        }
     }
 }
