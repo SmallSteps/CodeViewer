@@ -24,8 +24,6 @@ import java.io.IOException;
 
 public class TopLevelActivity extends Activity implements LastProjectsFragment.ProjectListListener {
 
-    TouchableTextView textView;
-
     private LastProjectsFragment lastProjectsFragment;
 
     @Override
@@ -34,36 +32,8 @@ public class TopLevelActivity extends Activity implements LastProjectsFragment.P
 
         setContentView(R.layout.activity_top_level);
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//
-//
-//
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onOpenFileClick(v);
-//            }
-//        });
-
         lastProjectsFragment = (LastProjectsFragment)getFragmentManager().
                 findFragmentById(R.id.last_projects_container);
-
-
-//        Fragment fragment = (Fragment)findViewById(R.id.last_projects_container);
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-//        textView = (TouchableTextView)findViewById(R.id.touchableText);
     }
 
     @Override

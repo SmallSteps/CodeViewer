@@ -4,6 +4,8 @@ package com.ozzzzz.bogdan.androidviewer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,11 +36,6 @@ public class LastProjectsFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        adapter = new ArrayAdapter<Project>(
-//                inflater.getContext(),
-//                android.R.layout.simple_list_item_1,
-//                AndroidViewer.projectManager.getProjects());
 
         adapter = new ArrayAdapter<Project>(
                 inflater.getContext(),
@@ -80,6 +77,14 @@ public class LastProjectsFragment extends ListFragment {
         adapter.notifyDataSetChanged();
     }
 
+    public void openProject(Project project) {
+        Intent intent = new Intent(getActivity(), InspectCodeActivity.class);
+        intent.putExtra(InspectCodeActivity.CURRENT_PROJECT, project);
+        startActivity(intent);
+
+
+    }
+
     public void deleteProject(Project project) {
         AndroidViewer.projectManager.removeProject(project);
         adapter.notifyDataSetChanged();
@@ -109,7 +114,7 @@ public class LastProjectsFragment extends ListFragment {
                 switch (menuItem.getItemId()) {
                     case R.id.action_open_project:
                         // Remove the item from the adapter
-                        Log.d("OPEN", "OPEEEEN!");
+                        openProject(adapter.getItem((int) id));
                         return true;
                     case R.id.action_delete_project:
                         deleteProject(adapter.getItem((int) id));

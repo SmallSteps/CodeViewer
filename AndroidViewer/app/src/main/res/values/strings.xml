@@ -13,6 +13,9 @@
     <string name="action_open_project">Open</string>
     <string name="action_delete_project">Delete</string>
 
+    <!-- INSPECT CODE ACTIVITY -->
+    <string name="select_file">Select file</string>
+
 
     <string name="long_text">All God\'s children need travelling shoes\n
         Drive your problems from here\n

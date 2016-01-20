@@ -270,19 +270,18 @@ public class OpenFileDialog extends AlertDialog.Builder {
     }
 
     private void RebuildFiles(ArrayAdapter<File> adapter) {
-        try {
             List<File> fileList = getFiles(currentPath);
             files.clear();
             selectedIndex = -1;
             files.addAll(fileList);
             adapter.notifyDataSetChanged();
             changeTitle();
-        } catch (NullPointerException e) { //todo exception не нужен
+
             String message = getContext().getResources().getString(android.R.string.unknownName);
             if (!accessDeniedMessage.equals(""))
                 message = accessDeniedMessage;
             Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     private ListView createListView(Context context) {
