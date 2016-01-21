@@ -20,7 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InspectCodeActivity" >
+        <activity
+            android:name=".InspectCodeActivity"
+            android:parentActivityName=".TopLevelActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TopLevelActivity"/>
         </activity>
     </application>
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/action_previous_code"
+        android:title="@string/action_add_project"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_media_previous"
+        tools:ignore="AppCompatResource" />
+
+    <item android:id="@+id/action_next_code"
+        android:title="@string/action_add_project"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_media_next"
+        tools:ignore="AppCompatResource" />
+
+    <item android:id="@+id/action_hierarchy"
+        android:title="@string/action_add_project"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:icon="@android:drawable/sym_contact_card"
+        tools:ignore="AppCompatResource" />
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="3"
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource" />
+
+</menu>

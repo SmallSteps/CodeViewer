@@ -1,8 +1,10 @@
 package com.ozzzzz.bogdan.androidviewer;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.ozzzzz.bogdan.androidviewer.utils.textselection.TouchableTextView;
 
@@ -14,7 +16,7 @@ import java.util.Scanner;
 public class InspectCodeActivity extends Activity {
 
     private TouchableTextView codeField;
-    public static final String CURRENT_PROJECT = "current_project";
+    public static final String CURRENT_PROJECT = "currentProject";
     private Project currentProject;
     private ArrayList<String> codeArray = new ArrayList<String>();
 
@@ -23,12 +25,22 @@ public class InspectCodeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspect_code);
 
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
         codeField = (TouchableTextView) findViewById(R.id.codeField);
 
         Intent intent = getIntent();
         currentProject = (Project) intent.getSerializableExtra(CURRENT_PROJECT);
 
         openFile(currentProject.getLocation());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_inspect_code, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void openFile(String location) {
